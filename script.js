@@ -92,7 +92,6 @@
       </li>`,
       )
       .join("");
-    $("#playersEmpty").style.display = state.players.length ? "none" : "block";
     const ok = state.players.length >= 2;
     $("#startBtn").disabled = !ok;
     $("#startHint").style.display = ok ? "none" : "block";
