@@ -1,7 +1,7 @@
 (function(){
   "use strict";
   const SUITS = ["♠","♥","♦","♣"];
-  const KEY = "chujomat.v1";
+  const KEY = "chuj.v1";
   const $ = s => document.querySelector(s);
 
   let state = { players:[], history:[], started:false, over:false };
