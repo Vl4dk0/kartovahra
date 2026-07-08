@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Chujomat — zapisovač bodov</title>
+  <meta name="theme-color" content="#27272b" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="brand">
+      <div class="brand__logo">
+        <span class="brand__suits"><span class="s-ink">♠</span><span class="s-red">♥</span></span>
+        <span class="brand__name">CHUJOMAT</span>
+        <span class="brand__suits"><span class="s-red">♦</span><span class="s-ink">♣</span></span>
+      </div>
+      <span class="brand__round" id="roundBadge" hidden>Kolo 1</span>
+    </header>
+
+    <!-- ============ SETUP ============ -->
+    <section class="view is-active" id="view-setup">
+      <div class="hero">
+        <div class="hero__suits"><span class="s-ink">♠</span> <span class="s-red">♥</span> <span class="s-red">♦</span> <span class="s-ink">♣</span></div>
+        <h1 class="hero__title">CHU<span>J</span>OMAT</h1>
+        <p class="hero__sub">Kto dnes bude <b>chuj</b>? Zapisuj body, uvidíme.</p>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel__title">Kto dnes hrá?</h2>
+        <div class="addbar">
+          <input class="field" id="nameInput" type="text" placeholder="Meno hráča" autocomplete="off" maxlength="16" aria-label="Meno hráča" />
+          <button class="btn btn--add" data-action="add-player" aria-label="Pridať hráča">+</button>
+        </div>
+        <ul class="players" id="playerList"></ul>
+        <p class="empty" id="playersEmpty">Zatiaľ nikto. Napíš meno a pridaj.</p>
+      </div>
+
+      <div class="setup__start">
+        <button class="btn btn--gold btn--block" id="startBtn" data-action="start" disabled>Rozdať karty</button>
+        <p class="hint" id="startHint">Treba aspoň dvoch hráčov.</p>
+      </div>
+    </section>
+
+    <!-- ============ GAME ============ -->
+    <section class="view" id="view-game">
+      <div class="dealer">
+        <div class="card" id="dealerCard" aria-hidden="true">
+          <span class="card__idx" id="dcIdxTL">?</span>
+          <span class="card__pip" id="dcPip">♠</span>
+          <span class="card__idx card__idx--br" id="dcIdxBR">?</span>
+        </div>
+        <div class="dealer__text">
+          <span class="dealer__label">Mieša karty</span>
+          <span class="dealer__name" id="dealerName">—</span>
+          <span class="dealer__hint">a rozdáva toto kolo</span>
+        </div>
+      </div>
+
+      <div class="board">
+        <div class="board__scroll">
+          <table id="scoreTable">
+            <thead id="scoreHead"></thead>
+            <tbody id="scoreBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn--gold btn--block" data-action="open-round">+ Nové kolo</button>
+        <div class="actions__row">
+          <button class="btn btn--ghost" style="color:var(--paper);border-color:rgba(250,244,232,.3)" id="undoBtn" data-action="undo">↩ Vrátiť kolo</button>
+        </div>
+        <button class="link" data-action="end-game">Ukončiť hru</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ ROUND SHEET ============ -->
+  <div class="sheet-back" id="sheetBack">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="sheet__grip"></div>
+      <h3 class="sheet__title" id="sheetTitle">Nové kolo</h3>
+      <p class="sheet__deal" id="sheetDeal"></p>
+      <div id="sheetRows"></div>
+      <div class="sheet__actions">
+        <button class="btn btn--ghost" data-action="cancel-round">Zrušiť</button>
+        <button class="btn btn--gold" data-action="save-round">Zapísať</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ END OVERLAY ============ -->
+  <div class="over" id="overlay">
+    <div class="over__suits"><span class="s-ink">♠</span> <span class="s-red">♥</span> <span class="s-red">♦</span> <span class="s-ink">♣</span></div>
+    <h2 class="over__verdict" id="verdict"></h2>
+    <ul class="stand" id="standings"></ul>
+    <div class="over__actions">
+      <button class="btn btn--ghost" style="color:var(--paper);border-color:rgba(250,244,232,.35)" data-action="undo-from-over">↩ To bola chyba</button>
+      <button class="btn btn--gold" data-action="rematch">Odveta</button>
+      <button class="btn btn--red" data-action="new-players">Noví hráči</button>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
