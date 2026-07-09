@@ -2,6 +2,7 @@
   "use strict";
   const SUITS = ["♠", "♥", "♦", "♣"];
   const KEY = "chuj.v1";
+  const MUTE = "chuj.muted";
   // Súčet bodov v jednom kole je vždy jedna z týchto hodnôt:
   // 20 (základ), 24 (dolník žaluďový dupľovaný), 28 (dolník listový dupľovaný),
   // 40 (oba dupľované → všetky srdcové dupľované).
@@ -27,6 +28,20 @@
     return t;
   }
   const totals = () => computeTotals(state.history, state.players.length);
+
+  // Ktorí hráči už niekedy (v doterajšej histórii) prekročili 90 bodov (t.j. 91–99).
+  function everOver90(history, n) {
+    const ever = new Array(n).fill(false);
+    const t = new Array(n).fill(0);
+    for (const round of history) {
+      for (let i = 0; i < n; i++) {
+        t[i] += round[i] || 0;
+        if (t[i] === 100) t[i] = 90;
+        if (t[i] > 90) ever[i] = true;
+      }
+    }
+    return ever;
+  }
   const dealerIndex = () =>
     state.history.length % Math.max(state.players.length, 1);
 
@@ -62,10 +77,12 @@
       pickVoice(); // zoznam môže byť ešte prázdny…
       window.speechSynthesis.addEventListener("voiceschanged", pickVoice); // …doplní sa sem
     }
-    function speak(text) {
-      if (!supported) return;
+    let muted = false;
+    // queue=false → pred rečou zrušíme frontu; queue=true → táto hláška ide za predošlú
+    function speak(text, queue) {
+      if (!supported || muted || !text) return;
       if (!voice) pickVoice(); // skús znova, ak sa hlasy medzitým načítali
-      window.speechSynthesis.cancel(); // nech sa hlášky neradia do fronty
+      if (!queue) window.speechSynthesis.cancel(); // nech sa hlášky neradia do fronty
       const u = new SpeechSynthesisUtterance(text);
       if (voice) {
         u.voice = voice;
@@ -75,7 +92,11 @@
       }
       window.speechSynthesis.speak(u);
     }
-    return { speak };
+    function setMuted(m) {
+      muted = m;
+      if (supported && m) window.speechSynthesis.cancel(); // stíš aj to, čo práve hovorí
+    }
+    return { speak, setMuted, isMuted: () => muted };
   })();
 
   let lastDealer = -1; // index naposledy ohláseného miešajúceho (-1 = žiadny)
@@ -101,6 +122,24 @@
       .querySelectorAll(".view")
       .forEach((v) => v.classList.remove("is-active"));
     $("#view-" + name).classList.add("is-active");
+  }
+
+  // Po zápise kola posuň tabuľku na najnovší riadok.
+  function scrollBoardToBottom() {
+    const el = $(".board__scroll");
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
+  }
+
+  // Zosúlaď ikonku a stav tlačidla hlasu.
+  function updateSoundBtn() {
+    const btn = $("#soundBtn");
+    if (!btn) return;
+    const muted = Voice.isMuted();
+    btn.classList.toggle("is-muted", muted);
+    btn.setAttribute("aria-pressed", String(!muted));
   }
 
   function render() {
@@ -295,10 +334,12 @@
       if (!confirm("Súčet bodov je: " + sum + ".\n\nZapísať kolo aj tak?")) return;
     }
     const before = totals();
+    const wasOver90 = everOver90(state.history, state.players.length); // pred týmto kolom
     state.history.push(pts);
 
-    // messaging + bust detection
+    // messaging + bust detection + prvé prekročenie 90
     const busted = [];
+    const newlyOver90 = [];
     state.players.forEach((p, i) => {
       const reached = before[i] + pts[i];
       if (reached === 100) {
@@ -306,6 +347,8 @@
       } else if (reached > 100) {
         busted.push(i);
       }
+      // prvýkrát nad 90 (91–99) → nižníky sa mu odteraz nepočítajú
+      if (!wasOver90[i] && reached > 90 && reached < 100) newlyOver90.push(i);
     });
 
     closeRound();
@@ -316,12 +359,18 @@
       render();
     } else {
       save();
-      renderGame();
+      renderGame(); // ohlási zmenu miešajúceho
       // re-trigger dealer card deal animation
       const c = $("#dealerCard");
       c.classList.remove("card--deal");
       void c.offsetWidth;
       c.classList.add("card--deal");
+      // hlas: prvé prekročenie 90 → nižníky sa nepočítajú (zaradí sa za miešajúceho)
+      if (newlyOver90.length) {
+        const mena = newlyOver90.map((i) => state.players[i].name).join(" a ");
+        Voice.speak(`Pre ${mena} sa odteraz nižníky nepočítajú.`, true);
+      }
+      scrollBoardToBottom();
     }
   }
 
@@ -401,6 +450,15 @@
     if (!el) return;
     const a = el.dataset.action;
     switch (a) {
+      case "toggle-sound": {
+        const m = !Voice.isMuted();
+        Voice.setMuted(m);
+        try {
+          localStorage.setItem(MUTE, m ? "1" : "0");
+        } catch (e) {}
+        updateSoundBtn();
+        break;
+      }
       case "add-player":
         addPlayer();
         break;
@@ -518,6 +576,11 @@
 
   /* ---------- init ---------- */
   load();
+  try {
+    Voice.setMuted(localStorage.getItem(MUTE) === "1"); // obnov uložený stav hlasu
+  } catch (e) {}
+  updateSoundBtn();
   render();
+  scrollBoardToBottom(); // po obnove rozohranej hry ukáž najnovšie kolo
   booted = true; // od tejto chvíle už hlásenia hovoríme nahlas
 })();

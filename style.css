@@ -113,6 +113,53 @@ body::before {
   border-radius: 999px;
   white-space: nowrap;
 }
+.brand__tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 999px;
+  background: rgba(231, 178, 75, 0.1);
+  border: 1px solid rgba(231, 178, 75, 0.35);
+  color: var(--gold);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.icon-btn:hover {
+  background: rgba(231, 178, 75, 0.18);
+}
+.icon-btn:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+.icon-btn.is-muted {
+  color: #86828c;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+.icon-btn .icon-off {
+  display: none;
+}
+.icon-btn.is-muted .icon-on {
+  display: none;
+}
+.icon-btn.is-muted .icon-off {
+  display: inline;
+}
 
 .view {
   display: none;
