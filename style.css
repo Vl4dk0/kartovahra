@@ -65,7 +65,7 @@ body::before {
   max-width: 640px;
   margin: 0 auto;
   padding: 22px 18px calc(28px + env(safe-area-inset-bottom));
-  min-height: 100dvh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -118,10 +118,14 @@ body::before {
   display: none;
   flex: 1;
   flex-direction: column;
+  min-height: 0;
   animation: fade 0.35s ease both;
 }
 .view.is-active {
   display: flex;
+}
+#view-setup {
+  overflow-y: auto;
 }
 @keyframes fade {
   from {
@@ -342,6 +346,7 @@ body::before {
   gap: 16px;
   justify-content: center;
   padding: 18px 0 20px;
+  flex: none;
 }
 .dealer__label {
   font-size: 11px;
@@ -427,19 +432,27 @@ body::before {
   box-shadow: var(--shadow);
   border: 1px solid rgba(255, 255, 255, 0.25);
   overflow: hidden;
+  flex: 0 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 .board__scroll {
-  overflow-x: auto;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
+  flex: 1;
+  min-height: 0;
 }
 table {
   border-collapse: collapse;
   width: 100%;
   min-width: 100%;
 }
-thead th {
+thead {
   position: sticky;
   top: 0;
+  z-index: 4;
+  background: var(--paper);
 }
 .th-name {
   padding: 14px 8px 8px;
@@ -573,6 +586,7 @@ tbody tr:nth-child(even) .rnd-no {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex: none;
 }
 .actions__row {
   display: flex;
@@ -712,6 +726,37 @@ tbody tr:nth-child(even) .rnd-no {
   outline: none;
   border-color: var(--gold-deep);
   box-shadow: 0 0 0 3px rgba(231, 178, 75, 0.25);
+}
+.sheet__sum {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 11px 15px;
+  border-radius: 12px;
+  background: rgba(28, 20, 32, 0.05);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.sheet__sum b {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+}
+.sheet__sum.is-clean {
+  background: rgba(231, 178, 75, 0.14);
+  border-color: rgba(231, 178, 75, 0.4);
+}
+.sheet__sum.is-clean b {
+  color: var(--gold-deep);
 }
 .sheet__actions {
   display: flex;

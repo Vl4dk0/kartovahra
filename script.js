@@ -2,6 +2,10 @@
   "use strict";
   const SUITS = ["♠", "♥", "♦", "♣"];
   const KEY = "chuj.v1";
+  // Súčet bodov v jednom kole je vždy jedna z týchto hodnôt:
+  // 20 (základ), 24 (dolník žaluďový dupľovaný), 28 (dolník listový dupľovaný),
+  // 40 (oba dupľované → všetky srdcové dupľované).
+  const CLEAN_TOTALS = new Set([20, 24, 28, 40]);
   const $ = (s) => document.querySelector(s);
 
   let state = { players: [], history: [], started: false, over: false };
@@ -208,19 +212,40 @@
       .querySelectorAll(".pts")
       .forEach((inp) => {
         inp.addEventListener("focus", () => inp.select());
+        inp.addEventListener("input", updateRoundSum);
       });
+    updateRoundSum();
   }
   function closeRound() {
     $("#sheetBack").classList.remove("is-open");
   }
 
-  function saveRound() {
+  // Read the points currently typed into the round sheet, one entry per player.
+  function readPts() {
     const n = state.players.length;
     const pts = [];
     for (let i = 0; i < n; i++) {
       let v = parseInt($("#pts-" + i).value, 10);
       if (isNaN(v)) v = 0;
       pts.push(v);
+    }
+    return pts;
+  }
+
+  // Keep the live round total in sync; highlight it when it's a valid sum.
+  function updateRoundSum() {
+    const sum = readPts().reduce((a, b) => a + b, 0);
+    const val = $("#sheetSumVal");
+    if (val) val.textContent = sum;
+    const box = $("#sheetSum");
+    if (box) box.classList.toggle("is-clean", CLEAN_TOTALS.has(sum));
+  }
+
+  function saveRound() {
+    const pts = readPts();
+    const sum = pts.reduce((a, b) => a + b, 0);
+    if (!CLEAN_TOTALS.has(sum)) {
+      if (!confirm("Súčet bodov je: " + sum + ".\n\nZapísať kolo aj tak?")) return;
     }
     const before = totals();
     state.history.push(pts);
@@ -356,6 +381,7 @@
         if (isNaN(v)) v = 0;
         v += +el.dataset.d;
         inp.value = v;
+        updateRoundSum();
         break;
       }
       case "undo":
