@@ -44,6 +44,43 @@
     } catch (e) {}
   }
 
+  /* ---------- voice (Web Speech API) ---------- */
+  // Ohlasuje zmenu miešajúceho a koniec hry. Hlas: preferuj "sk", fallback "cs",
+  // inak default. getVoices() sa môže naplniť až po evente "voiceschanged".
+  const Voice = (function () {
+    const supported =
+      typeof window !== "undefined" && "speechSynthesis" in window;
+    let voice = null;
+    function pickVoice() {
+      const vs = window.speechSynthesis.getVoices();
+      voice =
+        vs.find((v) => /^sk/i.test(v.lang)) ||
+        vs.find((v) => /^cs/i.test(v.lang)) ||
+        null;
+    }
+    if (supported) {
+      pickVoice(); // zoznam môže byť ešte prázdny…
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice); // …doplní sa sem
+    }
+    function speak(text) {
+      if (!supported) return;
+      if (!voice) pickVoice(); // skús znova, ak sa hlasy medzitým načítali
+      window.speechSynthesis.cancel(); // nech sa hlášky neradia do fronty
+      const u = new SpeechSynthesisUtterance(text);
+      if (voice) {
+        u.voice = voice;
+        u.lang = voice.lang;
+      } else {
+        u.lang = "sk-SK"; // fallback: nech engine aspoň skúsi slovenčinu
+      }
+      window.speechSynthesis.speak(u);
+    }
+    return { speak };
+  })();
+
+  let lastDealer = -1; // index naposledy ohláseného miešajúceho (-1 = žiadny)
+  let booted = false; // hlásenia zapneme až po prvom rendere (nie pri obnove stránky)
+
   /* ---------- toast ---------- */
   function toast(html) {
     const el = document.createElement("div");
@@ -84,6 +121,7 @@
 
   /* ---------- setup ---------- */
   function renderSetup() {
+    lastDealer = -1; // späť v setupe → nová hra nech znova ohlási miešajúceho
     $("#roundBadge").hidden = true;
     const list = $("#playerList");
     list.innerHTML = state.players
@@ -124,6 +162,15 @@
       $("#dcIdxBR").style.color =
       $("#dcPip").style.color =
         dcolor;
+
+    // voice: ohlás zmenu miešajúceho (len počas hry, nie pri obnove stránky)
+    if (!state.over) {
+      if (booted && di !== lastDealer) {
+        const next = state.players[(di + 1) % n];
+        Voice.speak(`Teraz mieša ${d.name}. Začína ${next.name}.`);
+      }
+      lastDealer = di;
+    }
 
     // header
     const heat = (v) => (v >= 90 ? "hot" : v >= 70 ? "warm" : "");
@@ -292,6 +339,15 @@
     else if (names.length === 1) verdict = `${names[0]}<em>je chuj!</em>`;
     else verdict = `${names.join(" A ")}<em>sú chuji!</em>`;
     $("#verdict").innerHTML = verdict;
+
+    // voice: na konci hry ohlás porazeného ("<meno> je chuj!")
+    let spoken;
+    if (names.length === 1)
+      spoken = `${state.players[losers[0]].name} je chuj!`;
+    else if (names.length >= 2)
+      spoken = `${losers.map((i) => state.players[i].name).join(" a ")} sú chuji!`;
+    if (booted && spoken) Voice.speak(spoken);
+    lastDealer = -1; // ďalšia hra/odveta nech znova ohlási miešajúceho
 
     // standings sorted by points asc (least = winner)
     const order = state.players
@@ -463,4 +519,5 @@
   /* ---------- init ---------- */
   load();
   render();
+  booted = true; // od tejto chvíle už hlásenia hovoríme nahlas
 })();
