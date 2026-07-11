@@ -175,7 +175,6 @@
       .join("");
     const ok = state.players.length >= 2;
     $("#startBtn").disabled = !ok;
-    $("#startHint").style.display = ok ? "none" : "block";
   }
 
   /* ---------- game ---------- */
