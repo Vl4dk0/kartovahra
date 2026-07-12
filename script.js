@@ -330,7 +330,8 @@
     const pts = readPts();
     const sum = pts.reduce((a, b) => a + b, 0);
     if (!CLEAN_TOTALS.has(sum)) {
-      if (!confirm("Súčet bodov je: " + sum + ".\n\nZapísať kolo aj tak?")) return;
+      if (!confirm("Súčet bodov je: " + sum + ".\n\nZapísať kolo aj tak?"))
+        return;
     }
     const before = totals();
     const wasOver90 = everOver90(state.history, state.players.length); // pred týmto kolom
@@ -367,7 +368,7 @@
       // hlas: prvé prekročenie 90 → nižníky sa nepočítajú (zaradí sa za miešajúceho)
       if (newlyOver90.length) {
         const mena = newlyOver90.map((i) => state.players[i].name).join(" a ");
-        Voice.speak(`Pre ${mena} sa odteraz nižníky nepočítajú.`, true);
+        Voice.speak(`Pre ${mena} sa odteraz výšnici nepočítajú.`, true);
       }
       scrollBoardToBottom();
     }
