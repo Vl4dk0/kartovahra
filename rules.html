@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Chuj — Pravidlá</title>
+    <meta name="theme-color" content="#27272b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,900&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="rules-page">
+    <div class="wrap wrap--rules">
+      <header class="brand">
+        <div class="brand__logo">
+          <span class="brand__suits"
+            ><span class="s-ink">♠</span><span class="s-red">♥</span></span
+          >
+          <span class="brand__name">CHUJ</span>
+          <span class="brand__suits"
+            ><span class="s-red">♦</span><span class="s-ink">♣</span></span
+          >
+        </div>
+        <a class="backlink" href="index.html">← Späť k hre</a>
+      </header>
+
+      <div class="rules-hero">
+        <h1 class="rules-hero__title">Pravidlá</h1>
+        <p class="rules-hero__sub">
+          Body sú zlé. Kto ich nazbiera priveľa, je <b>chuj</b>.
+        </p>
+      </div>
+
+      <!-- 1 · Hráči a karty -->
+      <section class="panel rules-sec">
+        <span class="rules-sec__no">1</span>
+        <h2 class="panel__title">Hráči a karty</h2>
+        <p>
+          Hrá sa s balíčkom <b>32 kariet</b>. Hráčov môže byť koľkokoľvek,
+          odporúčaný počet je <b>4 – 6</b>.
+        </p>
+        <p>
+          Ak 32 nie je deliteľné počtom hráčov, z balíčka sa odoberie niekoľko
+          kariet tak, aby sa všetky dali rozdať rovnomerne. Odoberajú sa
+          <span class='card-chip'><span class="s-red">♦</span></span> od
+            najmenšej</b
+          >
+          (sedmička, potom osmička…).
+        </p>
+        <div class="rules-note">
+          <span class="rules-note__pip s-red">♦</span>
+          <span class="rules-note__txt"
+            >Príklad: pri 5 hráčoch sa odoberú
+            <span class="card-chip"
+              ><span class="s-red">7</span><span class="s-red">♦</span></span
+            >
+            a
+            <span class="card-chip"
+              ><span class="s-red">8</span><span class="s-red">♦</span></span
+            >
+            — ostane 30 kariet, každý dostane 6.</span
+          >
+        </div>
+      </section>
+
+      <!-- 2 · Rozdávanie -->
+      <section class="panel rules-sec">
+        <span class="rules-sec__no">2</span>
+        <h2 class="panel__title">Rozdávanie</h2>
+        <p>
+          Karty sa zamiešajú a rozdajú <b>všetky</b> rovnomerne medzi hráčov.
+        </p>
+        <p>
+        Hráč si karty udržiava v <b>tajnosti</b>.
+        </p>
+        <p>Kolo začína hráč <b>po pravici</b> toho, kto miešal a rozdával.</p>
+        <p>Povinnosť miešať a rozdávať sa taktiež posúva po pravici <b>po pravici</b></p>
+      </section>
+
+      <!-- 3 · Body -->
+      <section class="panel rules-sec">
+        <span class="rules-sec__no">3</span>
+        <h2 class="panel__title">Za čo sú body</h2>
+        <p>Body sú zlé — cieľom je nazbierať ich čo najmenej.</p>
+        <ul class="pts-list">
+          <li>
+            <span class="pts-list__what card-chip"
+              ><span class="s-red">7-A</span><span class="s-red">♥</span></span
+            >
+            <b>1 b</b>
+          </li>
+          <li>
+            <span class="pts-list__what"
+              ><span class="card-chip"
+                ><span class="s-ink">Q</span><span class="s-ink">♠</span></span
+              ></span
+            >
+            <b>8 b</b>
+          </li>
+          <li>
+            <span class="pts-list__what"
+              ><span class="card-chip"
+                ><span class="s-ink">Q</span><span class="s-ink">♣</span></span
+              ></span
+            >
+            <b>4 b</b>
+          </li>
+        </ul>
+        <div class="rules-note">
+          <span class="rules-note__pip">Σ</span>
+          <span class="rules-note__txt"
+            >V hre je spolu 20 bodov na kolo (bez vysvietenia).</span
+          >
+        </div>
+      </section>
+
+      <!-- 4 · Priebeh hry -->
+      <section class="panel rules-sec">
+        <span class="rules-sec__no">4</span>
+        <h2 class="panel__title">Priebeh hry</h2>
+        <ul class="rules-list">
+          <li>
+            <b><span class='card-chip'><span class="s-red">♥</span></span> sa začínať nesmie</b> — kým
+            na kopu nepadla prvá červeň, alebo kým hráč nemá na ruke nič iné než
+            červene.
+          </li>
+          <li>
+            Kto vynáša, zahrá kartu ľubovoľnej (povolenej) farby. Každý ďalší
+            hráč <b>musí priznať farbu</b>, ak ju na ruke má.
+          </li>
+          <li>
+            Kto vynesenú farbu nemá, smie hodiť <b>čokoľvek</b> — ideálna
+            chvíľa, ako niekomu nadeliť body.
+          </li>
+          <li>
+            Kopu berie ten, kto zahral
+            <b>najvyššiu kartu prvej (vynesenej) farby</b>. Karty iných farieb
+            kopu nikdy neberú.
+          </li>
+          <li>Kto kopu zobral, vynáša do ďalšej kopy.</li>
+        </ul>
+
+        <p class="trick__label">
+          Príklad:
+        </p>
+        <div class="trick">
+          <div class="trick__card">
+            <span class="mini-card"
+              ><span class="mini-card__idx s-ink">8</span>
+              <span class="mini-card__pip s-ink">♠</span></span
+            >
+            <span class="trick__who">A</span>
+            <span class="trick__why">vynáša zeleň</span>
+          </div>
+          <div class="trick__card">
+            <span class="mini-card"
+              ><span class="mini-card__idx s-red">A</span>
+              <span class="mini-card__pip s-red">♥</span></span
+            >
+            <span class="trick__who">B</span>
+            <span class="trick__why">nemá zeleň, hodí body</span>
+          </div>
+          <div class="trick__card trick__card--takes">
+            <span class="mini-card"
+              ><span class="mini-card__idx s-ink">A</span>
+              <span class="mini-card__pip s-ink">♠</span></span
+            >
+            <span class="trick__who">C ♚</span>
+            <span class="trick__why">najvyššia zeleň — berie kopu</span>
+          </div>
+          <div class="trick__card">
+            <span class="mini-card"
+              ><span class="mini-card__idx s-ink">Q</span>
+              <span class="mini-card__pip s-ink">♠</span></span
+            >
+            <span class="trick__who">D</span>
+            <span class="trick__why">zelený vyšník, 8 b pre C</span>
+          </div>
+        </div>
+        <div class="rules-note">
+          <span class="rules-note__pip s-red">♥</span>
+          <span class="rules-note__txt"
+            >C berie celú kopu — aj s
+            <span class="card-chip"
+              ><span class="s-red">A</span><span class="s-red">♥</span></span
+            >
+            a
+            <span class="card-chip"
+              ><span class="s-ink">Q</span><span class="s-ink">♠</span></span
+            >, teda 9 bodov.</span
+          >
+        </div>
+      </section>
+
+      <!-- 5 · Vysvietenie -->
+      <section class="panel rules-sec">
+        <span class="rules-sec__no">5</span>
+        <h2 class="panel__title">Vysvietenie</h2>
+        <p>
+          Hráč môže <b>vysvietiť</b> zeleného
+          <span class="card-chip"
+            ><span class="s-ink">Q</span><span class="s-ink">♠</span></span
+          >
+          alebo žaluďového
+          <span class="card-chip"
+            ><span class="s-ink">Q</span><span class="s-ink">♣</span></span
+          >
+          vyšníka tak, že ho vyloží
+          <b>skôr, než začínajúci hráč zahrá prvú kartu kola</b>.
+        </p>
+        <ul class="rules-list">
+          <li>
+            Vysvietený vyšník má v tomto kole <b>dvojnásobnú hodnotu</b><br>
+            (
+            <span class="card-chip">
+              <span class="s-ink">Q</span>
+              <span class="s-ink">♠</span>
+            </span>
+            16 b,
+            <span class="card-chip">
+              <span class="s-ink">Q</span>
+              <span class="s-ink">♣</span>
+            </span>
+            8 b).
+          </li>
+          <li>
+            Ak sa vysvietia <b>obaja vyšníci</b>, zdvojnásobí sa aj hodnota
+            červení — každá červeň <span class="s-red">♥</span> je za 2 b.
+          </li>
+        </ul>
+      </section>
+
+      <!-- 6 · Prevrat -->
+      <section class="panel rules-sec">
+        <span class="rules-sec__no">6</span>
+        <h2 class="panel__title">Prevrat</h2>
+        <p>
+          Ak jeden hráč nazbiera v kole <b>všetky body</b>, nastáva prevrat: on
+          dostane <b>0 bodov</b> a všetci ostatní dostanú plný súčet bodov kola.
+        </p>
+        <div class="rules-note">
+          <span class="rules-note__pip">↻</span>
+          <span class="rules-note__txt"
+            >Bežne teda: 0 pre prevratníka, 20 pre každého ostatného.</span
+          >
+        </div>
+      </section>
+
+      <!-- 7 · Zápis a koniec -->
+      <section class="panel rules-sec">
+        <span class="rules-sec__no">7</span>
+        <h2 class="panel__title">Zápis a koniec hry</h2>
+        <ul class="rules-list">
+          <li>Body sa po každom kole sčítavajú do celkového skóre.</li>
+          <li>Kto dosiahne <b>presne 100</b>, vracia sa späť na <b>90</b>.</li>
+          <li>
+            Hráčovi, ktorý má <b>viac ako 90</b>, sa 
+              <span class="card-chip">
+                <span class="s-ink">Q</span>
+              </span>
+            už nepočítajú —
+            zbiera už len 
+              <span class="card-chip">
+                <span class="s-red">♥</span>
+              </span>
+          </li>
+          <li>
+            Kto <b>prekročí 100</b>, prehráva — je <b>chuj</b> a hra končí.
+          </li>
+        </ul>
+      </section>
+
+      <div class="rules-back">
+        <a class="btn btn--gold btn--block" href="index.html">Späť k hre</a>
+      </div>
+    </div>
+  </body>
+</html>

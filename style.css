@@ -151,6 +151,12 @@ body::before {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.14);
 }
+.icon-btn--link {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  font-family: var(--font-display);
+}
 .icon-btn .icon-off {
   display: none;
 }
@@ -970,6 +976,254 @@ tbody tr:nth-child(even) .rnd-no {
     opacity: 0;
     transform: translateY(14px);
   }
+}
+
+/* ---------- rules page ---------- */
+.wrap--rules {
+  height: auto;
+  min-height: 100dvh;
+}
+.backlink {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  text-decoration: none;
+  background: rgba(231, 178, 75, 0.1);
+  border: 1px solid rgba(231, 178, 75, 0.35);
+  padding: 7px 13px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.backlink:hover {
+  background: rgba(231, 178, 75, 0.18);
+}
+.backlink:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+.rules-hero {
+  text-align: center;
+  padding: 22px 0 20px;
+}
+.rules-hero__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(40px, 12vw, 62px);
+  line-height: 0.9;
+  margin: 0;
+  text-shadow:
+    0 3px 0 var(--gold-deep),
+    0 14px 30px rgba(0, 0, 0, 0.5);
+}
+.rules-hero__sub {
+  margin: 12px 0 0;
+  color: #d7d4de;
+  font-size: 15px;
+}
+.rules-hero__sub b {
+  color: var(--paper);
+}
+.rules-sec {
+  position: relative;
+  margin-bottom: 16px;
+  animation: fade 0.35s ease both;
+}
+.rules-sec .panel__title {
+  padding-right: 44px;
+}
+.rules-sec__no {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 26px;
+  line-height: 1;
+  color: rgba(200, 145, 46, 0.45);
+}
+.rules-sec p {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.rules-sec p:last-child {
+  margin-bottom: 0;
+}
+.rules-list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+}
+.rules-list:last-child {
+  margin-bottom: 0;
+}
+.rules-list li {
+  position: relative;
+  padding: 8px 0 8px 22px;
+  font-size: 15px;
+  line-height: 1.5;
+  border-top: 1px solid var(--line);
+}
+.rules-list li:first-child {
+  border-top: none;
+}
+.rules-list li::before {
+  content: "♦";
+  position: absolute;
+  left: 2px;
+  top: 9px;
+  font-size: 11px;
+  color: var(--gold-deep);
+}
+.pts-list {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+}
+.pts-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 2px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+}
+.pts-list li b {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--red-deep);
+  font-variant-numeric: tabular-nums;
+}
+.pts-list__what .s-ink {
+  color: var(--ink);
+}
+.rules-note {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: rgba(231, 178, 75, 0.14);
+  border: 1px solid rgba(231, 178, 75, 0.4);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.rules-note__pip {
+  font-weight: 700;
+  flex: none;
+}
+.rules-note__txt {
+  flex: 1;
+  min-width: 0;
+}
+/* inline card chip — visual for a specific named card */
+.card-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 20px;
+  padding: 0 5px;
+  background: linear-gradient(160deg, #fff, #f3ecdf);
+  border-radius: 5px;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.09),
+    0 2px 5px -2px rgba(0, 0, 0, 0.4);
+  font-weight: 700;
+  font-size: 11.5px;
+  line-height: 1;
+  margin: 0px 2px;
+  white-space: nowrap;
+}
+.card-chip .s-ink {
+  color: var(--ink);
+}
+/* example trick */
+.trick__label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 16px 0 10px;
+}
+.trick {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.trick__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+.mini-card {
+  position: relative;
+  width: 46px;
+  height: 64px;
+  background: linear-gradient(160deg, #fff, #f3ecdf);
+  border-radius: 8px;
+  box-shadow:
+    0 8px 16px -8px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.07);
+  display: block;
+}
+.trick__card:nth-child(odd) .mini-card {
+  transform: rotate(-3deg);
+}
+.trick__card:nth-child(even) .mini-card {
+  transform: rotate(3deg);
+}
+.mini-card__idx {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+}
+.mini-card__pip {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+.mini-card .s-ink {
+  color: var(--ink);
+}
+.trick__card--takes .mini-card {
+  box-shadow:
+    0 8px 16px -8px rgba(0, 0, 0, 0.45),
+    0 0 0 2.5px var(--gold-deep);
+}
+.trick__who {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+}
+.trick__card--takes .trick__who {
+  color: var(--gold-deep);
+}
+.trick__why {
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+.rules-back {
+  margin: 8px 0 4px;
+}
+.rules-back .btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
 }
 
 @media (max-width: 400px) {
