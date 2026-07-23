@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Deploy chuj to https://vladimirjancar.sk/chuj/
+# The server dir is a git checkout of this repo, served directly by nginx.
+# Push your commits to origin/main first, then run ./deploy to pull them live.
+set -euo pipefail
+
+ssh home 'cd /var/www/vladimirjancarsk/chuj && git pull --ff-only'
+
+echo "deployed → https://vladimirjancar.sk/chuj/"
